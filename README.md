@@ -1,5 +1,6 @@
 **Project: Stock Data Pipeline to Snowflake
 **
+
 This project implements an automated ETL pipeline in Python that fetches historical stock data from the National Stock Exchange (NSE) via Yahoo Finance using the yfinance library and loads it into Snowflake for analytics and reporting.
 
 The pipeline is designed for performance and scalability using parallel processing with Python’s ThreadPoolExecutor, enabling faster extraction and transformation of data for multiple stock symbols concurrently. Transformed data is written into Parquet files, which are then ingested into Snowflake using the PUT and COPY INTO commands for efficient and optimized loading.
