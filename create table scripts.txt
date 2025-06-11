@@ -1,0 +1,49 @@
+create or replace table stock_symbol (
+stock_symbol    VARCHAR(20)  PRIMARY KEY
+);
+
+create or replace table stocks (
+stock_symbol    STRING  PRIMARY KEY,
+stock_name      VARCHAR(255) NOT NULL,
+sector     VARCHAR(100) NOT NULL,
+industry   VARCHAR(100) NOT NULL,
+segment    VARCHAR(100) NOT NULL,           -- typeDisp
+region     VARCHAR(100) NOT NULL, 
+ipo_date   TIMESTAMP    DEFAULT '1799-12-31 00:00:00'::timestamp,
+is_current boolean
+);
+
+create or replace table DATA_LOAD_LOG (
+    ID INTEGER AUTOINCREMENT PRIMARY KEY,
+    PROCESS_NAME STRING,
+    START_TIME TIMESTAMP_NTZ,
+    END_TIME TIMESTAMP_NTZ,
+    STATUS STRING,
+    MESSAGE STRING
+);
+
+create or replace table stock_prices_single_load (
+stock_symbol    STRING references stocks(stock_symbol),
+price_date      date   NOT NULL,
+open_price      float,
+high_price      float,
+low_price       float,
+close_price     float,
+volume          number(38,0),
+primary key (stock_symbol, price_date)
+);
+
+create or replace table stock_prices_parallel_load (
+stock_symbol    STRING references stocks(stock_symbol),
+price_date      date   NOT NULL,
+open_price      float,
+high_price      float,
+low_price       float,
+close_price     float,
+volume          number(38,0),
+primary key (stock_symbol, price_date)
+);
+
+select * from stock_prices_single_load;
+select * from stock_prices_parallel_load;
+select * from data_load_log;
